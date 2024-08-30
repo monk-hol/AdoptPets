@@ -1,11 +1,11 @@
 @minLength(3)
 @maxLength(11)
-param namePrefix string
+param kiim1 string
 
 param location string = resourceGroup().location
 
 resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2021-04-15' = {
-  name: '${namePrefix}cosmos'
+  name: '${kiim1}cosmos'
   kind: 'MongoDB'
   location: location
   properties: {
@@ -64,7 +64,7 @@ resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2021-04-15' = {
 }
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
-  name: '${namePrefix}loganalytics'
+  name: '${kiim1}loganalytics'
   location: location
   properties: {
     sku: {
@@ -74,7 +74,7 @@ resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-previ
 }
 
 resource containerRegistry 'microsoft.containerregistry/registries@2021-12-01-preview' = {
-  name: '${namePrefix}acr'
+  name: '${kiim1}acr'
   location: location
   properties: {
     adminUserEnabled: true
@@ -85,7 +85,7 @@ resource containerRegistry 'microsoft.containerregistry/registries@2021-12-01-pr
 }
 
 resource conatinerAppEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
-  name: '${namePrefix}containerappenvironment'
+  name: '${kiim1}containerappenvironment'
   location: location
   properties: {
     appLogsConfiguration: {
@@ -101,7 +101,7 @@ resource conatinerAppEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' 
 // Cuando ya hagas el deploy de tu app recuerda cambiar el targetPort a: 3000
 
 resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
-  name: '${namePrefix}containerapp'
+  name: '${kiim1}containerapp'
   location: location
   properties: {
     managedEnvironmentId: conatinerAppEnvironment.id
@@ -138,7 +138,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
     template: {
       containers: [
         {
-          name: '${namePrefix}containerapp'
+          name: '${kiim1}containerapp'
           image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
           env: [
             {
